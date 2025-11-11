@@ -27,34 +27,35 @@
 </head>
 
   <body>
-    <script>
-      // Wait until Flutter engine is loaded
-      window.addEventListener("load", function () {
-        _flutter.loader
-          .loadEntrypoint({
-            serviceWorker: {
-              serviceWorkerVersion: null,
-            },
-            onEntrypointLoaded: function (engineInitializer) {
-              engineInitializer.initializeEngine().then(function (appRunner) {
-                appRunner.runApp();
-              });
-            },
-          })
-          .then(function () {
-            // Register service worker under correct GitHub Pages scope
+<script>
+  window.addEventListener("load", function () {
+    _flutter.loader
+      .loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: null,
+        },
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(function (appRunner) {
+            appRunner.runApp();
+
+            // Register service worker *after* Flutter app starts
             if ("serviceWorker" in navigator) {
-              navigator.serviceWorker
-                .register("flutter_service_worker.js", { scope: "./" })
-                .then((reg) =>
-                  console.log("Service worker registered for:", reg.scope)
-                )
-                .catch((err) =>
-                  console.error("SW registration failed:", err)
-                );
+              setTimeout(() => {
+                navigator.serviceWorker
+                  .register("flutter_service_worker.js", { scope: "./" })
+                  .then((reg) => {
+                    console.log("Service worker registered:", reg.scope);
+                  })
+                  .catch((err) => {
+                    console.error("SW registration failed:", err);
+                  });
+              }, 2000); // wait 2 seconds for stability
             }
           });
+        },
       });
-    </script>
+  });
+</script>
+
   </body>
 </html>
