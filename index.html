@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
   <meta
@@ -25,7 +25,6 @@
   <!-- Flutter web bootstrap -->
   <script src="flutter.js" defer></script>
 </head>
-
   <body>
 <script>
   window.addEventListener("load", function () {
@@ -41,9 +40,7 @@
             // Register service worker *after* Flutter app starts
             if ("serviceWorker" in navigator) {
               setTimeout(() => {
-                navigator.serviceWorker
-                  .register("flutter_service_worker.js", { scope: "./" })
-                  .then((reg) => {
+                navigator.serviceWorker.register("flutter_service_worker.js", { scope: "/my_web_app/" })                .then((reg) => {
                     console.log("Service worker registered:", reg.scope);
                   })
                   .catch((err) => {
