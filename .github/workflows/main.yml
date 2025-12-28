@@ -1,0 +1,46 @@
+name: Flutter CI/CD - Android Release
+
+on:
+  push:
+    branches:
+      - main # This runs the workflow every time code is pushed to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use a fresh Ubuntu runner provided by GitHub
+
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x' # Specify your Flutter version if needed, '3.x' is usually safe
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: 🏗️ Build Android Release APK
+        # Builds the APK file which is stored in the build/app/outputs/flutter-apk/ folder
+        run: flutter build apk --release
+
+      - name: 📂 Rename APK for Release (Optional but helpful)
+        run: mv build/app/outputs/flutter-apk/app-release.apk app.apk
+
+      - name: 🏷️ Define Release Tag
+        # Use a timestamp or Git short SHA to create a unique release tag
+        id: tag_name
+        run: echo "tag=$(date +'%Y.%m.%d').${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag_name.outputs.tag }}
+          name: Release ${{ steps.tag_name.outputs.tag }}
+          body: This is an automated build from the ${{ github.ref_name }} branch.
+          files: app.apk # Attach the renamed APK file
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This is a secret automatically provided by GitHub
