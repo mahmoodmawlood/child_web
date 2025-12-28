@@ -1,0 +1,74 @@
+{
+    "name": "child_care",
+    "short_name": "child_care",
+    "id": "/",
+    "description": "Child growth index calculation",
+    "start_url": "child_web",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#008080",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+  "shortcuts": [
+    {
+      "name": "Open Child Growth",
+      "short_name": "Child",
+      "description": "Quick access to child growth indices",
+      "url": "/child_web/",
+      "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Settings",
+      "short_name": "Settings",
+      "description": "Open the settings page",
+      "url": "/child_web/settings",
+      "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "Icons/screenshot-wide.png",
+      "sizes": "1362x460",
+      "type": "image/png"
+    },
+    {
+      "src": "Icons/screenshot-mobile.png",
+      "sizes": "960x1280",
+      "type": "image/png"
+    }
+  ],
+
+  "protocol_handlers": [
+    {
+      "protocol": "child+indeces",
+      "url": "/child_web/?link=%s"
+    }
+  ]
+}
+
+}
